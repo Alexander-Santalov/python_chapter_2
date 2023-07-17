@@ -26,16 +26,22 @@ def test_dark_theme_by_time_and_user_choice():
     #  но учтите что темная тема может быть включена вручную
 
     is_dark_theme = None
-    if dark_theme_enabled_by_user is True:
-        is_dark_theme = True
-    elif dark_theme_enabled_by_user is False:
-        is_dark_theme = False
+    # if dark_theme_enabled_by_user is True:
+    #     is_dark_theme = True
+    # elif dark_theme_enabled_by_user is False:
+    #     is_dark_theme = False
+    # else:
+    #     if dark_theme_enabled_by_user is None:
+    #         if current_time.hour <= 6 or current_time.hour >= 22:
+    #             is_dark_theme = True
+    #         else:
+    #             is_dark_theme = False
+    # assert is_dark_theme is True
+
+    if dark_theme_enabled_by_user is not None:
+        is_dark_theme = dark_theme_enabled_by_user
     else:
-        if dark_theme_enabled_by_user is None:
-            if current_time.hour <= 6 or current_time.hour >= 22:
-                is_dark_theme = True
-            else:
-                is_dark_theme = False
+        is_dark_theme = current_time.hour >= 22 or current_time.hour < 6
     assert is_dark_theme is True
 
 
@@ -64,6 +70,7 @@ def test_find_suitable_user():
     for user in users:
         if user['age'] < 20:
             suitable_users.append(user)
+    # suitable_users = [user for user in users  if user['age'] < 20]
 
     assert suitable_users == [
         {"name": "Stanislav", "age": 15},
